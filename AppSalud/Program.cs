@@ -118,18 +118,83 @@ class Bascula
 
 class Paciente
 {
-    private  string nombre{ get; set; }
-    private string apellidos{ get; set; }
+    private string nombre { get; set; }
+    private string apellidos { get; set; }
     private DateTime fechaNacimiento { get; set; }
-    private Bascula resgistroBascula  { get; set;}
-    public Paciente()
+    private Bascula registroBascula { get; set; }
+    public Paciente(String nombre, String apellidos, DateTime fechaNacimiento,Bascula registroBascula)
     {
-        pesos = new List<double>();
-        alturas = new List<double>();
-        fechas = new List<DateTime>();
-        anotacion = 0;
+       this.nombre =nombre;
+       this.apellidos = apellidos;
+       this.fechaNacimiento = fechaNacimiento;
+       this.registroBascula = registroBascula;
+    }
+    public string obtenerNombre()
+    {
+        return nombre;
+    }
+    public String Saludar()
+    {
+        return("Hola soy" + this.nombre + " con el apellido" + this.apellidos);
+    }
+    public void modificarNombre(string nuevoNombre)
+    {
+        nombre = nuevoNombre;
+    }
+    public string obtenerApellido()
+    {
+        return apellidos;
+    }
+    public void modificarApellido(string nuevoApellido)
+    {
+        nombre = nuevoApellido;
+    }
+    public DateTime obtenerFechaNacimiento()
+    {
+        return fechaNacimiento;
+    }
+    public void modificarFechaNacimiento(DateTime nuevaFecha)
+    {
+        fechaNacimiento = nuevaFecha;
+    }
+    // Comprueba que el mes y el dia de la fecha de nacimiento es mayor 
+    // que el mes y el dia de la fecha actual:
+    public int obtenerEdad()
+    {
+        DateTime fechaActual = DateTime.Today;
+        int edad = fechaActual.Year - fechaNacimiento.Year;
+
+        if ((fechaNacimiento.Month > fechaActual.Month) ||
+            (fechaNacimiento.Month == fechaActual.Month && fechaNacimiento.Day > fechaActual.Day))
+        {
+            --edad;
+        }
+        return edad;
+    }
+    public Bascula obtenerBascula()
+    {
+        return registroBascula;
+    }
+    public void modificarBascula(Bascula nuevaBascula)
+    {
+        registroBascula = nuevaBascula;
+    }
+    public double calcularIMC()
+    {
+        return registroBascula.calcularIMC();
+    }
+
+}
+class Program
+{
+    static void Main(string[] args)
+    {
+        Bascula bascula = new Bascula();
+        Paciente paciente = new Paciente("Carla", "Valles", new DateTime(2001, 10, 25), bascula);
+        Console.WriteLine(paciente.Saludar());
     }
 }
+
 
 
 
